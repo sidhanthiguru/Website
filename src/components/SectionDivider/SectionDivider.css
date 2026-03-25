@@ -13,7 +13,7 @@
 .section-divider__line {
   flex: 1;
   height: 1.5px;
-  background: #1a4d2e;
+  background: #2F6B2F;
   opacity: 0.5;
 }
 
@@ -23,7 +23,7 @@
   justify-content: center;
   flex-shrink: 0;
   padding: 0 14px;
-  color: #1a4d2e;
+  color: #2F6B2F;
   opacity: 0.8;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -38,10 +38,12 @@
   .section-divider {
     padding: 12px 0 6px;
   }
+
   .section-divider__icon svg {
     width: 34px;
     height: 34px;
   }
+
   .section-divider__icon {
     padding: 0 10px;
   }

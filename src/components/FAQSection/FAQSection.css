@@ -58,7 +58,7 @@
 }
 
 .faq-item.open .faq-question {
-  color: var(--color-green-dark, #166534); /* Darker green if available, or fallback */
+  color: var(--color-primary-hover); /* Deep nature green from Sacred Garden palette */
   font-weight: 700;
 }
 

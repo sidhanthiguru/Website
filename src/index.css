@@ -11,35 +11,42 @@
   font-weight: 400;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Poppins';
   src: url('/images/Poppins/Poppins-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Poppins';
   src: url('/images/Poppins/Poppins-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Poppins';
   src: url('/images/Poppins/Poppins-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
+
 :root {
-  /* Colors */
-  --color-primary: #16802b;
-  --color-primary-hover: #126e24;
-  --color-primary-light: rgba(22, 128, 43, 0.08);
-  --color-text: #192119;
-  --color-text-muted: #5a6b5a;
-  --color-bg: #ffffff;
-  --color-surface: #f5f5f5;
-  --color-border: #e0e0e0;
+  /* Colors – Sacred Garden Palette (logo-derived) */
+  --color-primary: #5FAF4E;           /* Leaf Green */
+  --color-primary-hover: #2F6B2F;     /* Deep Nature Green */
+  --color-primary-light: rgba(95, 175, 78, 0.08);
+  --color-text: #1F2A1F;              /* Dark Elegant Green */
+  --color-text-muted: #4A5D4A;        /* Muted Nature Text */
+  --color-bg: #EDF7ED;               /* Soft Mint Green */
+  --color-surface: #FFF8EE;          /* Warm Cream (golden aura tint) */
+  --color-surface-alt: #EAF4FB;      /* Soft Sky Blue (logo sky tint) */
+  --color-border: #C8E6C9;           /* Vibrant Soft Green Border */
   --color-white: #ffffff;
+  --color-accent-gold: #F5B43C;      /* Golden Aura (logo) */
+  --color-accent-sky: #A9D6F5;       /* Soft Sky Blue (logo) */
 
   /* Typography */
   --font-primary: 'Poppins', sans-serif;
@@ -54,10 +61,10 @@
   --gap-cards: 24px;
 
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(25, 33, 25, 0.06);
-  --shadow-md: 0 8px 24px rgba(25, 33, 25, 0.08);
-  --shadow-lg: 0 16px 48px rgba(25, 33, 25, 0.12);
-  --shadow-hover: 0 12px 32px rgba(25, 33, 25, 0.14);
+  --shadow-sm: 0 2px 8px rgba(31, 42, 31, 0.06);
+  --shadow-md: 0 8px 24px rgba(31, 42, 31, 0.08);
+  --shadow-lg: 0 16px 48px rgba(31, 42, 31, 0.12);
+  --shadow-hover: 0 12px 32px rgba(31, 42, 31, 0.14);
 
   /* Transitions */
   --transition-fast: 0.2s ease;
@@ -85,7 +92,13 @@ body {
   font-size: 16px;
   line-height: 1.7;
   color: var(--color-text);
-  background: var(--color-bg);
+  /* Rich colorful gradient — leaf green → warm cream → sky blue (logo-inspired) */
+  background: linear-gradient(160deg,
+    #D4EDDA 0%,
+    #FFF3D6 40%,
+    #D6EEF9 80%,
+    #E8F5E9 100%);
+  background-attachment: fixed;
   overflow-x: hidden;
 }
 
@@ -100,7 +113,8 @@ a {
   text-decoration: none;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -111,13 +125,20 @@ button {
   background: none;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }
 
 /* ===== TYPOGRAPHY ===== */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-primary);
   font-weight: 700;
   line-height: 1.2;
@@ -162,6 +183,7 @@ p {
 
 .section-alt {
   background: var(--color-surface);
+  backdrop-filter: blur(0px);
 }
 
 .section-header {
@@ -188,42 +210,48 @@ p {
 }
 
 .btn-primary {
-  background: var(--color-primary);
+  background: linear-gradient(135deg, #5FAF4E 0%, #F5B43C 100%);
   color: var(--color-white);
+  box-shadow: 0 4px 16px rgba(245, 180, 60, 0.28);
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-hover);
-  transform: scale(1.03);
-  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, #2F6B2F 0%, #e0a020 100%);
+  transform: scale(1.04);
+  box-shadow: 0 8px 24px rgba(245, 180, 60, 0.38);
 }
 
 .btn-secondary {
-  background: transparent;
-  color: var(--color-text);
-  border: 2px solid var(--color-border);
+  background: rgba(169, 214, 245, 0.18);
+  color: #1B6A9A;
+  border: 2px solid #A9D6F5;
 }
 
 .btn-secondary:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  background: rgba(169, 214, 245, 0.35);
+  border-color: #7BBFE8;
+  color: #0E4C72;
   transform: scale(1.03);
 }
 
 .btn-link {
-  color: var(--color-primary);
-  font-weight: 600;
+  color: #C8860A;
+  font-weight: 700;
   padding: 0;
   gap: 6px;
 }
 
 .btn-link:hover {
+  color: #F5B43C;
   gap: 10px;
 }
 
 /* ===== CARDS ===== */
 .card {
-  background: var(--color-white);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--transition-base);
@@ -233,6 +261,7 @@ p {
 .card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-hover);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .card-img {

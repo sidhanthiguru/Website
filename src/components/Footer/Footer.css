@@ -1,6 +1,6 @@
 .footer {
-  background: var(--color-primary); /* Dark green background */
-  color: var(--color-white); /* White text */
+  background: linear-gradient(135deg, #1A4D2E 0%, #2F6B2F 45%, #C8860A 100%);
+  color: var(--color-white);
   padding: 80px 0 40px;
   position: relative;
   overflow: hidden;
@@ -100,10 +100,10 @@
 }
 
 .footer__social a:hover {
-  background: var(--color-white);
-  color: var(--color-primary);
+  background: #F5B43C;
+  color: #1A2E1A;
   transform: translateY(-3px);
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(245, 180, 60, 0.35);
 }
 
 .footer__bottom {

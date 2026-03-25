@@ -1,7 +1,7 @@
 .blog-card__img-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
-  background: linear-gradient(135deg, var(--color-primary), #2ebd4e);
+  background: linear-gradient(135deg, var(--color-primary), #7DCF6A);
   display: flex;
   align-items: center;
   justify-content: center;

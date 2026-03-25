@@ -6,7 +6,6 @@
 .hero {
   padding: 140px 0 80px;
   text-align: center;
-  background: var(--color-bg);
   overflow: hidden;
 }
 
@@ -29,14 +28,14 @@
   display: flex;
   gap: 4px;
   font-size: 1.4rem;
-  color: var(--color-primary);
+  color: #F5B43C;
   line-height: 1;
 }
 
 .hero__stars svg {
   width: 22px;
   height: 22px;
-  fill: var(--color-primary);
+  fill: #F5B43C;
 }
 
 .hero__rating-text {

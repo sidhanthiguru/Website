@@ -15,7 +15,7 @@
 .not-found-title {
   font-size: 8rem;
   font-weight: 800;
-  color: var(--primary-color, #7EB67D);
+  color: var(--primary-color, #5FAF4E);
   line-height: 1;
   margin-bottom: 0.5rem;
   letter-spacing: -0.05em;
@@ -39,19 +39,19 @@
 .back-home-btn {
   display: inline-block;
   padding: 1rem 2.5rem;
-  background-color: var(--primary-color, #7EB67D);
+  background-color: var(--primary-color, #5FAF4E);
   color: white;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(126, 182, 125, 0.3);
+  box-shadow: 0 4px 15px rgba(95, 175, 78, 0.3);
 }
 
 .back-home-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(126, 182, 125, 0.4);
-  background-color: #6da56c;
+  box-shadow: 0 6px 20px rgba(95, 175, 78, 0.4);
+  background-color: #4A9A3D;
 }
 
 @media (max-width: 768px) {
