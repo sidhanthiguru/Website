@@ -10,8 +10,8 @@ const features = [
         <path d="M2 14l1.48-1.48C3.9 12.05 4 11 4 10a8 8 0 0 1 8-8v0a8 8 0 0 1 8 8 8 8 0 0 1-8 8H2"/>
       </svg>
     ),
-    title: 'A cozy atmosphere',
-    description: 'Soft tones, natural materials, and an inviting layout create a peaceful space where you can focus, relax, and feel at home.',
+    title: 'Holistic Natural Healing',
+    description: 'We combine the science of naturopathy with yogic wisdom — using drug-free, non-invasive therapies like hydrotherapy, mud therapy, and diet therapy to treat root causes, not just symptoms.',
   },
   {
     icon: (
@@ -27,8 +27,8 @@ const features = [
         <path d="m19.1 4.9-1.4 1.4" />
       </svg>
     ),
-    title: 'Bright, natural lighting',
-    description: 'Large windows and warm lighting fill the studio with energy, creating the perfect balance of light for movement and mindfulness.',
+    title: 'Online & Offline Access',
+    description: 'All yoga programs, therapy sessions, prenatal and postnatal care, and hospital consultations are available both in-person at our Chennai centre and online — making holistic wellness accessible to everyone.',
   },
   {
     icon: (
@@ -36,8 +36,8 @@ const features = [
         <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" />
       </svg>
     ),
-    title: 'The latest equipment',
-    description: 'We use high-quality props and accessories to support smooth, effective practices for all levels, from beginner to advanced.',
+    title: 'Expert-Led Yoga Therapy',
+    description: 'Our certified instructors guide personalized yoga therapy programs for conditions like diabetes, PCOS, back pain, anxiety, and more — addressing each individual\'s unique health condition with care and expertise.',
   },
 ];
 
@@ -47,9 +47,9 @@ export default function StudioFeatures() {
       <div className="container">
         <ScrollReveal>
           <div className="studio-features__header">
-            <h2>Our studio</h2>
+            <h2>Why We Are Different</h2>
             <p>
-              We designed Sidhanthi Guru to be more than just a practice space—it's a place to feel strong, relaxed, and inspired. Our studio features:
+              Sidhanthi Guru is more than a yoga academy — it's a complete ecosystem of holistic health, education, and natural healing. Here's what sets us apart:
             </p>
           </div>
         </ScrollReveal>

@@ -11,33 +11,33 @@ import FAQSection from '../components/FAQSection/FAQSection'
 import { services } from '../data/services'
 
 const heroImages = [
-  { src: '/images/yoga-hero-left.png', alt: 'Yoga warrior pose in studio' },
+  { src: '/images/yoga-hero-left.png', alt: 'Yoga practice in studio' },
   { src: '/images/yoga-hero-center.png', alt: 'Modern yoga studio interior' },
-  { src: '/images/yoga-hero-right.png', alt: 'Yoga instructor coaching student' },
+  { src: '/images/yoga-hero-right.png', alt: 'Yoga instructor guiding student' },
 ]
 
 const focusCardsData = [
   {
     title: services[0].title,
     description: services[0].shortDesc,
-    src: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1840&auto=format&fit=crop", // Hatha yoga pose
+    src: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1840&auto=format&fit=crop',
   },
   {
     title: services[1].title,
     description: services[1].shortDesc,
-    src: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop", // Vinyasa flow
+    src: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop',
   },
   {
     title: services[2].title,
     description: services[2].shortDesc,
-    src: "https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=2070&auto=format&fit=crop", // Meditation / Mindfulness
+    src: 'https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=2070&auto=format&fit=crop',
   },
   {
     title: services[3].title,
     description: services[3].shortDesc,
-    src: "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=2070&auto=format&fit=crop", // Corporate Yoga
+    src: 'https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=2070&auto=format&fit=crop',
   },
-];
+]
 
 export default function HomePage() {
   return (
@@ -46,8 +46,10 @@ export default function HomePage() {
         rating={{ score: '4.9/5', label: 'with 300+ reviews' }}
         title="Transform Your Life Through the Ancient Wisdom of Yoga"
         accentWords="Wisdom of Yoga"
-        subtitle="Feel strong, move freely, and restore balance with Sidhanthi Guru Yoga Academy!"
-        primaryCta={{ label: 'Book a Class', to: '/contact' }}
+        subtitle="Unlock Your True Potential — 17 Years of Dedicated Yoga Excellence in Chennai"
+        body="Welcome to Sidhanthi Guru Yoga Academy, where ancient yogic wisdom meets modern wellness practices. Since 2008, we have been guiding individuals toward holistic transformation through authentic yoga practice. Our mission is simple yet powerful: World Transformation through Self Transformation."
+        primaryCta={{ label: 'Explore Our Programs', to: '/services' }}
+        secondaryCta={{ label: 'Contact Us', to: '/contact' }}
         images={heroImages}
       >
         <div className="hero__badge">
@@ -65,10 +67,10 @@ export default function HomePage() {
           <ScrollReveal>
             <div className="section-header">
               <h2>Discover Our Transformative Yoga Programs</h2>
-              <p>Discover the transformative power of yoga through our comprehensive programs designed for every level of practitioner.</p>
+              <p>From general wellness to specialized therapy, prenatal care to structured courses — our programs are available <strong>Online &amp; Offline</strong> for every stage of your journey.</p>
             </div>
           </ScrollReveal>
-          
+
           <ScrollReveal delay={200}>
             <FocusCards cards={focusCardsData} />
           </ScrollReveal>
@@ -80,7 +82,7 @@ export default function HomePage() {
       {/* Studio Features */}
       <StudioFeatures />
 
-      {/* Infinity Marquee - integrated with 3rd section */}
+      {/* Infinity Marquee */}
       <section style={{ paddingBottom: '4rem', overflow: 'hidden' }}>
         <ScrollReveal delay={200}>
           <InfinityMarquee />

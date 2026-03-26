@@ -344,3 +344,43 @@ p {
     font-size: 1.75rem;
   }
 }
+
+/* ===== SECTION UTILITIES ===== */
+.section-curved {
+  background-color: var(--color-surface);
+  position: relative;
+  padding: 180px 0; /* More breathable space */
+  margin: 100px 0; /* Significant gap from dividers to avoid "smudging" */
+  z-index: 2;
+  overflow: visible;
+}
+
+/* Creating the "bending" curve effect - more subtle and precise */
+.section-curved::before,
+.section-curved::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px; /* Shorter curve */
+  background-color: var(--color-surface);
+  z-index: -1;
+}
+
+.section-curved::before {
+  top: -59px;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.section-curved::after {
+  bottom: -59px;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+
+.section-curved--no-bottom::after {
+  display: none;
+}
+
+.section-curved--no-bottom {
+  margin-bottom: 0;
+}
