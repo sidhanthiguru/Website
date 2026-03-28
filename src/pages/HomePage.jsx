@@ -44,8 +44,8 @@ export default function HomePage() {
     <>
       <Hero
         rating={{ score: '4.9/5', label: 'with 300+ reviews' }}
-        title="Transform Your Life Through the Ancient Wisdom of Yoga"
-        accentWords="Wisdom of Yoga"
+        title="A Journey of Holistic Healing and Awareness"
+        accentWords="Holistic Healing"
         subtitle="Unlock Your True Potential — 17 Years of Dedicated Yoga Excellence in Chennai"
         body="Welcome to Sidhanthi Guru Yoga Academy, where ancient yogic wisdom meets modern wellness practices. Since 2008, we have been guiding individuals toward holistic transformation through authentic yoga practice. Our mission is simple yet powerful: World Transformation through Self Transformation."
         primaryCta={{ label: 'Explore Our Programs', to: '/services' }}
