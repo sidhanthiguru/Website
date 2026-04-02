@@ -1,13 +1,44 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import './LoginPage.css'
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loginLoading, setLoginLoading] = useState(false)
+  const { login, currentUser, loading } = useAuth()
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  useEffect(() => {
+    if (!loading && currentUser) {
+      navigate('/dashboard');
+    }
+  }, [currentUser, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Mock login: Just navigate to dashboard
-    navigate('/dashboard');
+    
+    try {
+      setError('')
+      setLoginLoading(true)
+      await login(email, password)
+      navigate('/dashboard')
+    } catch (err) {
+      console.error(err)
+      setError('Failed to log in. Please check your credentials.')
+    } finally {
+      setLoginLoading(false)
+    }
   };
 
   return (
@@ -22,33 +53,45 @@ export default function LoginPage() {
           <div className="login-header">
             <img src="/images/Sidhanthi_Guru_Logo__1_-removebg-preview.png" alt="Logo" className="login-logo" />
             <h2>Welcome Back</h2>
-            <p>Sign in to access your student portal</p>
+            <p>Sign in to your administrative dashboard</p>
           </div>
+          
+          {error && <div className="error-message">{error}</div>}
           
           <form className="login-form" onSubmit={handleLogin}>
             <div className="form-group">
               <label>Email Address</label>
-              <input type="email" placeholder="you@example.com" required />
+              <input 
+                type="email" 
+                placeholder="admin@example.com" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required 
+              />
             </div>
             
             <div className="form-group">
               <label>Password</label>
-              <input type="password" placeholder="••••••••" required />
+              <input 
+                type="password" 
+                placeholder="••••••••" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
             </div>
             
-            <div className="form-options">
-              <label className="remember-me">
-                <input type="checkbox" />
-                <span>Remember me</span>
-              </label>
-              <a href="#" className="forgot-password">Forgot Password?</a>
-            </div>
-            
-            <button type="submit" className="btn btn-primary btn-block">Sign In</button>
+            <button 
+              type="submit" 
+              className="btn btn-primary btn-block"
+              disabled={loginLoading}
+            >
+              {loginLoading ? 'Signing In...' : 'Sign In'}
+            </button>
           </form>
           
           <div className="login-footer">
-            <p>Don't have an account? <a href="/contact">Contact us</a> to enroll.</p>
+            <p>Authorized access only.</p>
           </div>
         </div>
       </div>

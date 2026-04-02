@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore'
+import { db } from '../firebase'
 import Hero from '../components/Hero/Hero'
 import ScrollReveal from '../components/ScrollReveal/ScrollReveal'
 import SectionDivider from '../components/SectionDivider/SectionDivider'
-import { blogPosts, blogCategories } from '../data/blog'
+import { blogCategories } from '../data/blog'
 import './BlogPage.css'
 
 const blogImages = [
@@ -13,12 +15,33 @@ const blogImages = [
 
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState('All')
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const q = query(
+      collection(db, 'blogs'), 
+      where('isArchived', '==', false),
+      orderBy('createdAt', 'desc')
+    )
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const livePosts = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      setPosts(livePosts)
+      setLoading(false)
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   const filtered = activeCategory === 'All'
-    ? blogPosts
-    : blogPosts.filter((p) => p.category === activeCategory)
+    ? posts
+    : posts.filter((p) => p.category === activeCategory)
 
-  const featuredPost = blogPosts[0]; // Just use the first one for the design
+  const featuredPost = filtered.length > 0 ? filtered[0] : null;
 
   return (
     <div className="blog-page">
@@ -32,27 +55,31 @@ export default function BlogPage() {
       <SectionDivider />
 
       {/* Featured Post */}
-      <section className="section overflow-hidden">
-        <div className="container">
-          <ScrollReveal>
-            <div className="featured-post glass-card">
-              <div className="featured-post__image-wrapper">
-                <img src={blogImages[0]} alt={featuredPost.title} className="featured-post__image" />
-                <div className="featured-post__badge">Featured</div>
-              </div>
-              <div className="featured-post__content">
-                <span className="blog-meta">{featuredPost.category} • {featuredPost.date}</span>
-                <h2>{featuredPost.title}</h2>
-                <p>{featuredPost.excerpt}</p>
-                <div className="featured-post__footer">
-                  <span className="blog-author">By {featuredPost.author}</span>
-                  <button className="btn-link">Read Article →</button>
+      {featuredPost && (
+        <section className="section overflow-hidden">
+          <div className="container">
+            <ScrollReveal>
+              <div className="featured-post glass-card">
+                <div className="featured-post__image-wrapper">
+                  <img src={featuredPost.photoUrl} alt={featuredPost.title} className="featured-post__image" />
+                  <div className="featured-post__badge">Featured</div>
+                </div>
+                <div className="featured-post__content">
+                  <span className="blog-meta">
+                    {featuredPost.category} • {featuredPost.createdAt?.toDate ? featuredPost.createdAt.toDate().toLocaleDateString() : 'Recent'}
+                  </span>
+                  <h2>{featuredPost.title}</h2>
+                  <p>{featuredPost.excerpt}</p>
+                  <div className="featured-post__footer">
+                    <span className="blog-author">By {featuredPost.author}</span>
+                    <button className="btn-link">Read Article →</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
 
       {/* Blog Grid */}
       <section className="section bg-surface overflow-hidden">
@@ -80,25 +107,31 @@ export default function BlogPage() {
 
           {/* Grid */}
           <div className="blog-grid-modern">
-            {filtered.map((post, i) => {
-              const imgSrc = blogImages[i % blogImages.length];
-              return (
+            {loading ? (
+              <div className="blog-loading w-full text-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mx-auto"></div>
+                <p className="mt-4">Fetching articles...</p>
+              </div>
+            ) : filtered.length > 0 ? (
+              filtered.map((post, i) => (
                 <ScrollReveal key={post.id} delay={i * 100}>
                   <div className="blog-card-modern">
                     <div className="blog-card-modern__image-wrapper">
-                      <img src={imgSrc} alt={post.title} className="blog-card-modern__image" />
+                      <img src={post.photoUrl} alt={post.title} className="blog-card-modern__image" />
                       <div className="blog-card-modern__category">{post.category}</div>
                     </div>
                     <div className="blog-card-modern__content">
-                      <span className="blog-meta">{post.date}</span>
+                      <span className="blog-meta">
+                        {post.createdAt?.toDate ? post.createdAt.toDate().toLocaleDateString() : 'Recent'}
+                      </span>
                       <h3>{post.title}</h3>
                       <p>{post.excerpt}</p>
                       <button className="btn-link mt-auto">Read More →</button>
                     </div>
                   </div>
                 </ScrollReveal>
-              );
-            })}
+              ))
+            ) : null}
           </div>
 
           {filtered.length === 0 && (

@@ -139,7 +139,7 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="founder-editorial__image-wrapper">
               <div className="founder-editorial__decorative-element"></div>
-              <img src="/images/attachments/IMG_0060.JPG" alt="Dr. D. Uma Maheswari — Founder" className="founder-editorial__image" />
+              <div className="founder-editorial__image founder-editorial__image-blank"></div>
               <div className="founder-editorial__badge">
                 <span className="badge-years">17+</span>
                 <span className="badge-text">Years of<br />Experience</span>

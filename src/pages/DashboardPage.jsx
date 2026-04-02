@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { 
   BookOpen, 
   PlusCircle, 
@@ -11,14 +11,127 @@ import {
   CheckCircle, 
   Users,
   Menu,
-  X
+  X,
+  Trash2,
+  Archive,
+  ArchiveRestore,
+  Eye,
+  EyeOff
 } from 'lucide-react'
+import { 
+  collection, 
+  addDoc, 
+  onSnapshot, 
+  query, 
+  orderBy, 
+  deleteDoc, 
+  doc, 
+  updateDoc,
+  serverTimestamp 
+} from 'firebase/firestore'
+import { db } from '../firebase'
+import { useAuth } from '../context/AuthContext'
 import BlogCard from '../components/BlogCard/BlogCard'
 import './DashboardPage.css'
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('blogs')
   const [isSidebarOpen, setSidebarOpen] = useState(false)
+  const { currentUser, logout } = useAuth()
+  const navigate = useNavigate()
+
+  // Blog State
+  const [blogs, setBlogs] = useState([])
+  const [blogLoading, setBlogLoading] = useState(true)
+  
+  // Form State
+  const [title, setTitle] = useState('')
+  const [category, setCategory] = useState('Wellness')
+  const [excerpt, setExcerpt] = useState('')
+  const [content, setContent] = useState('')
+  const [photoUrlInput, setPhotoUrlInput] = useState('')
+  const [isPublishing, setIsPublishing] = useState(false)
+
+  // Fetch Blogs
+  useEffect(() => {
+    const q = query(collection(db, 'blogs'), orderBy('createdAt', 'desc'))
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const blogData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      setBlogs(blogData)
+      setBlogLoading(false)
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate('/login')
+    } catch (err) {
+      console.error('Failed to log out', err)
+    }
+  }
+
+  const handlePublish = async (e) => {
+    e.preventDefault()
+    
+    setIsPublishing(true)
+    try {
+      // Use provided URL or default fallback
+      const photoUrl = photoUrlInput.trim() || 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800'
+      
+      // 1. Save to Firestore
+      await addDoc(collection(db, 'blogs'), {
+        title,
+        category,
+        excerpt,
+        content,
+        photoUrl,
+        author: currentUser.email.split('@')[0],
+        authorEmail: currentUser.email,
+        isArchived: false,
+        createdAt: serverTimestamp()
+      })
+
+      // 3. Reset Form
+      setTitle('')
+      setCategory('Wellness')
+      setExcerpt('')
+      setContent('')
+      setPhotoUrlInput('')
+      setActiveTab('blogs')
+      alert('Blog published successfully!')
+    } catch (err) {
+      console.error('Error publishing blog:', err)
+      alert(`Failed to publish blog: ${err.message}`)
+    } finally {
+      setIsPublishing(false)
+    }
+  }
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      try {
+        await deleteDoc(doc(db, 'blogs', id))
+      } catch (err) {
+        console.error('Error deleting blog:', err)
+      }
+    }
+  }
+
+  const toggleArchive = async (id, currentStatus) => {
+    try {
+      await updateDoc(doc(db, 'blogs', id), {
+        isArchived: !currentStatus
+      })
+    } catch (err) {
+      console.error('Error toggling archive:', err)
+    }
+  }
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen)
   const closeSidebar = () => setSidebarOpen(false)
@@ -29,12 +142,12 @@ export default function DashboardPage() {
   }
 
   const stats = [
-    { label: 'Total Blogs', value: '12', icon: <BookOpen />, color: '#6366f1' },
-    { label: 'Pending Posts', value: '3', icon: <Clock />, color: '#f59e0b' },
-    { label: 'Confirmed', value: '9', icon: <CheckCircle />, color: '#10b981' },
+    { label: 'Total Blogs', value: blogs.length.toString(), icon: <BookOpen />, color: '#6366f1' },
+    { label: 'Archived', value: blogs.filter(b => b.isArchived).length.toString(), icon: <Archive />, color: '#f59e0b' },
+    { label: 'Live Posts', value: blogs.filter(b => !b.isArchived).length.toString(), icon: <CheckCircle />, color: '#10b981' },
     { label: 'Total Inquiries', value: '45', icon: <MessageSquare />, color: '#3b82f6' },
     { label: 'Pending Replies', value: '8', icon: <Clock />, color: '#f59e0b' },
-    { label: 'System Users', value: '2', icon: <Users />, color: '#a855f7' },
+    { label: 'System Users', value: '1', icon: <Users />, color: '#a855f7' },
   ]
 
   const dummyPosts = [
@@ -73,7 +186,7 @@ export default function DashboardPage() {
           <div className="brand-info">
             <h2>Sidhanthi Guru</h2>
             <div className="user-meta">
-              <span>admin@sidhanthi.guru</span>
+              <span>{currentUser?.email}</span>
               <span className="badge">admin</span>
             </div>
           </div>
@@ -82,9 +195,9 @@ export default function DashboardPage() {
           <Link to="/" className="nav-btn secondary">
             <ExternalLink size={18} /> <span className="btn-text">Back to Site</span>
           </Link>
-          <Link to="/" className="nav-btn danger">
+          <button onClick={handleLogout} className="nav-btn danger">
             <LogOut size={18} /> <span className="btn-text">Logout</span>
-          </Link>
+          </button>
         </div>
       </nav>
 
@@ -124,7 +237,7 @@ export default function DashboardPage() {
           <Link to="/" className="sidebar-link">
             <ExternalLink size={20} /> Main Website
           </Link>
-          <button className="sidebar-link danger">
+          <button onClick={handleLogout} className="sidebar-link danger">
             <LogOut size={20} /> Logout
           </button>
         </div>
@@ -156,7 +269,7 @@ export default function DashboardPage() {
               className={`tab-btn ${activeTab === 'blogs' ? 'active' : ''}`}
               onClick={() => setActiveTab('blogs')}
             >
-              <BookOpen size={18} /> Blogs ({dummyPosts.length})
+              <BookOpen size={18} /> Blogs ({blogs.length})
             </button>
             <button 
               className={`tab-btn ${activeTab === 'create' ? 'active' : ''}`}
@@ -187,16 +300,37 @@ export default function DashboardPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {dummyPosts.map(post => (
-                        <tr key={post.id}>
-                          <td className="font-medium">{post.title}</td>
+                      {blogLoading ? (
+                        <tr><td colSpan="5" className="text-center">Loading blogs...</td></tr>
+                      ) : blogs.length === 0 ? (
+                        <tr><td colSpan="5" className="text-center">No blogs found.</td></tr>
+                      ) : blogs.map(post => (
+                        <tr key={post.id} className={post.isArchived ? 'row-archived' : ''}>
+                          <td className="font-medium">
+                            <div className="flex items-center gap-2">
+                              {post.isArchived && <EyeOff size={14} className="text-muted" />}
+                              {post.title}
+                            </div>
+                          </td>
                           <td><span className="table-badge">{post.category}</span></td>
-                          <td>{post.date}</td>
+                          <td>{post.createdAt?.toDate ? post.createdAt.toDate().toLocaleDateString() : 'Just now'}</td>
                           <td>{post.author}</td>
                           <td>
                             <div className="action-btns">
-                              <button className="icon-btn edit">✎</button>
-                              <button className="icon-btn delete">🗑</button>
+                              <button 
+                                className={`icon-btn ${post.isArchived ? 'restore' : 'archive'}`}
+                                onClick={() => toggleArchive(post.id, post.isArchived)}
+                                title={post.isArchived ? 'Unarchive' : 'Archive'}
+                              >
+                                {post.isArchived ? <ArchiveRestore size={18} /> : <Archive size={18} />}
+                              </button>
+                              <button 
+                                className="icon-btn delete" 
+                                onClick={() => handleDelete(post.id)}
+                                title="Delete"
+                              >
+                                <Trash2 size={18} />
+                              </button>
                             </div>
                           </td>
                         </tr>
@@ -209,32 +343,77 @@ export default function DashboardPage() {
 
             {activeTab === 'create' && (
               <div className="create-tab fade-in">
-                <div className="create-form-wrapper">
+                <form className="create-form-wrapper" onSubmit={handlePublish}>
                   <div className="form-grid">
                     <div className="form-group">
                       <label>Blog Title</label>
-                      <input type="text" placeholder="Enter post title..." />
+                      <input 
+                        type="text" 
+                        placeholder="Enter post title..." 
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
+                      />
                     </div>
                     <div className="form-group">
                       <label>Category</label>
-                      <select>
+                      <select value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option>Wellness</option>
                         <option>Yoga</option>
                         <option>Meditation</option>
                         <option>Nutrition</option>
+                        <option>Yoga Practice Tips</option>
+                        <option>Meditation & Mindfulness</option>
+                        <option>Wellness & Health</option>
+                        <option>Yoga Philosophy</option>
                       </select>
                     </div>
                   </div>
+
                   <div className="form-group">
-                    <label>Excerpt</label>
-                    <textarea rows="3" placeholder="Short description..."></textarea>
+                    <label>Photo URL (Required)</label>
+                    <input 
+                      type="url" 
+                      placeholder="https://images.unsplash.com/photo-..." 
+                      value={photoUrlInput}
+                      onChange={(e) => setPhotoUrlInput(e.target.value)}
+                      required
+                    />
+                    <small style={{ color: '#94a3b8', marginTop: '4px', display: 'block' }}>
+                      Tip: Right-click any image on the web and select "Copy image address".
+                    </small>
                   </div>
+
+                  <div className="form-group">
+                    <label>Excerpt (Short summary)</label>
+                    <input 
+                      type="text" 
+                      placeholder="Short description..." 
+                      value={excerpt}
+                      onChange={(e) => setExcerpt(e.target.value)}
+                      required
+                    />
+                  </div>
+
                   <div className="form-group">
                     <label>Content</label>
-                    <textarea rows="10" placeholder="Write your blog post content here..."></textarea>
+                    <textarea 
+                      rows="10" 
+                      placeholder="Write your blog post content here..."
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
+                      required
+                    ></textarea>
                   </div>
-                  <button className="btn btn-primary submit-btn">Publish Post</button>
-                </div>
+                  
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary submit-btn"
+                    disabled={isPublishing}
+                  >
+                    {isPublishing ? 'Publishing...' : 'Publish Post'}
+                  </button>
+                </form>
               </div>
             )}
 

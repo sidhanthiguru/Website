@@ -172,6 +172,14 @@
   object-fit: cover;
 }
 
+.founder-editorial__image-blank {
+  background-color: var(--color-surface);
+  border: 2px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .founder-editorial__decorative-element {
   position: absolute;
   top: -30px;
@@ -386,6 +394,13 @@
     height: auto;
     aspect-ratio: 4/3;
     margin-top: 40px;
+  }
+
+  .about-intro__img-main {
+    object-position: top;
+    top: -50px; /* Move it even higher */
+    height: 100%; /* Maximize vertical height */
+    width: 65%; /* Narrowing width for a better vertical fit (zoom out) */
   }
 
   .founder-editorial__image-wrapper {
