@@ -44,6 +44,10 @@ export default function DashboardPage() {
   const [blogs, setBlogs] = useState([])
   const [blogLoading, setBlogLoading] = useState(true)
   
+  // Inquiry State
+  const [inquiries, setInquiries] = useState([])
+  const [inquiriesLoading, setInquiriesLoading] = useState(true)
+  
   // Form State
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('Wellness')
@@ -62,6 +66,21 @@ export default function DashboardPage() {
       }))
       setBlogs(blogData)
       setBlogLoading(false)
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  // Fetch Inquiries
+  useEffect(() => {
+    const q = query(collection(db, 'inquiries'), orderBy('submittedAt', 'desc'))
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const inquiryData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      setInquiries(inquiryData)
+      setInquiriesLoading(false)
     })
 
     return () => unsubscribe()
@@ -117,8 +136,21 @@ export default function DashboardPage() {
     if (window.confirm('Are you sure you want to delete this post?')) {
       try {
         await deleteDoc(doc(db, 'blogs', id))
+        alert('Blog deleted successfully!')
       } catch (err) {
         console.error('Error deleting blog:', err)
+        alert(`Error deleting blog: ${err.message}`)
+      }
+    }
+  }
+
+  const handleDeleteInquiry = async (id) => {
+    if (window.confirm('Are you sure you want to delete this inquiry?')) {
+      try {
+        await deleteDoc(doc(db, 'inquiries', id))
+      } catch (err) {
+        console.error('Error deleting inquiry:', err)
+        alert('Failed to delete inquiry.')
       }
     }
   }
@@ -145,8 +177,8 @@ export default function DashboardPage() {
     { label: 'Total Blogs', value: blogs.length.toString(), icon: <BookOpen />, color: '#6366f1' },
     { label: 'Archived', value: blogs.filter(b => b.isArchived).length.toString(), icon: <Archive />, color: '#f59e0b' },
     { label: 'Live Posts', value: blogs.filter(b => !b.isArchived).length.toString(), icon: <CheckCircle />, color: '#10b981' },
-    { label: 'Total Inquiries', value: '45', icon: <MessageSquare />, color: '#3b82f6' },
-    { label: 'Pending Replies', value: '8', icon: <Clock />, color: '#f59e0b' },
+    { label: 'Total Inquiries', value: inquiries.length.toString(), icon: <MessageSquare />, color: '#3b82f6' },
+    { label: 'Recent Inquiry', value: inquiries.length > 0 ? inquiries[0].name.split(' ')[0] : 'None', icon: <Clock />, color: '#f59e0b' },
     { label: 'System Users', value: '1', icon: <Users />, color: '#a855f7' },
   ]
 
@@ -169,11 +201,6 @@ export default function DashboardPage() {
     }
   ]
 
-  const dummySubmissions = [
-    { id: 1, name: "Rahul S.", email: "rahul@example.com", date: "2 mins ago", subject: "General Inquiry" },
-    { id: 2, name: "Priya M.", email: "priya@example.com", date: "1 hour ago", subject: "Pricing" },
-    { id: 3, name: "Amit K.", email: "amit@example.com", date: "3 hours ago", subject: "Schedule" },
-  ]
 
   return (
     <div className="dashboard-layout dark-theme">
@@ -281,7 +308,7 @@ export default function DashboardPage() {
               className={`tab-btn ${activeTab === 'forms' ? 'active' : ''}`}
               onClick={() => setActiveTab('forms')}
             >
-              <MessageSquare size={18} /> Form Submissions ({dummySubmissions.length})
+              <MessageSquare size={18} /> Form Submissions ({inquiries.length})
             </button>
           </div>
 
@@ -425,23 +452,39 @@ export default function DashboardPage() {
                       <tr>
                         <th>Sender</th>
                         <th>Email</th>
+                        <th>Phone</th>
                         <th>Subject</th>
-                        <th>Time</th>
+                        <th>Date</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {dummySubmissions.map(sub => (
-                        <tr key={sub.id}>
-                          <td className="font-medium">{sub.name}</td>
-                          <td>{sub.email}</td>
-                          <td>{sub.subject}</td>
-                          <td>{sub.date}</td>
-                          <td>
-                            <button className="btn-small">View Details</button>
-                          </td>
-                        </tr>
-                      ))}
+                      {inquiriesLoading ? (
+                        <tr><td colSpan="6" className="text-center">Loading submissions...</td></tr>
+                      ) : inquiries.length === 0 ? (
+                        <tr><td colSpan="6" className="text-center">No submissions found.</td></tr>
+                      ) : (
+                        inquiries.map(sub => (
+                          <tr key={sub.id}>
+                            <td className="font-medium">{sub.name}</td>
+                            <td>{sub.email}</td>
+                            <td>{sub.phone || 'N/A'}</td>
+                            <td><span className="table-badge secondary">{sub.subject}</span></td>
+                            <td>{sub.submittedAt?.toDate ? sub.submittedAt.toDate().toLocaleDateString() : 'Just now'}</td>
+                            <td>
+                              <div className="action-btns">
+                                <button 
+                                  className="icon-btn delete" 
+                                  onClick={() => handleDeleteInquiry(sub.id)}
+                                  title="Delete"
+                                >
+                                  <Trash2 size={18} />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

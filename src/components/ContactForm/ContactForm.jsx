@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { db } from '../../firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import './ContactForm.css'
 
 export default function ContactForm() {
@@ -9,7 +11,9 @@ export default function ContactForm() {
     subject: 'General Inquiry',
     message: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState(null)
 
   const subjects = [
     'General Inquiry',
@@ -24,10 +28,34 @@ export default function ContactForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 4000)
+    setIsSubmitting(true)
+    setError(null)
+    
+    try {
+      await addDoc(collection(db, 'inquiries'), {
+        ...formData,
+        submittedAt: serverTimestamp()
+      })
+      
+      setSubmitted(true)
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: 'General Inquiry',
+        message: '',
+      })
+      
+      setTimeout(() => setSubmitted(false), 5000)
+    } catch (err) {
+      console.error('Error submitting form:', err)
+      setError('Failed to send message. Please try again later.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -35,6 +63,12 @@ export default function ContactForm() {
       {submitted && (
         <div className="contact-form__success">
           ✓ Thank you! Your message has been sent. We'll get back to you within 24 hours.
+        </div>
+      )}
+
+      {error && (
+        <div className="contact-form__error" style={{ color: '#ef4444', marginBottom: '1rem', background: '#fee2e2', padding: '0.8rem', borderRadius: '4px' }}>
+          ✕ {error}
         </div>
       )}
 
@@ -48,6 +82,7 @@ export default function ContactForm() {
           placeholder="Your full name"
           value={formData.name}
           onChange={handleChange}
+          disabled={isSubmitting}
         />
       </div>
 
@@ -61,6 +96,7 @@ export default function ContactForm() {
           placeholder="your@email.com"
           value={formData.email}
           onChange={handleChange}
+          disabled={isSubmitting}
         />
       </div>
 
@@ -73,6 +109,7 @@ export default function ContactForm() {
           placeholder="+91 XXXXX XXXXX"
           value={formData.phone}
           onChange={handleChange}
+          disabled={isSubmitting}
         />
       </div>
 
@@ -84,6 +121,7 @@ export default function ContactForm() {
           required
           value={formData.subject}
           onChange={handleChange}
+          disabled={isSubmitting}
         >
           {subjects.map((s) => (
             <option key={s} value={s}>{s}</option>
@@ -100,11 +138,16 @@ export default function ContactForm() {
           placeholder="Tell us about your goals or questions..."
           value={formData.message}
           onChange={handleChange}
+          disabled={isSubmitting}
         />
       </div>
 
-      <button type="submit" className="btn btn-primary contact-form__submit">
-        Send Message
+      <button 
+        type="submit" 
+        className="btn btn-primary contact-form__submit"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Sending...' : 'Send Message'}
       </button>
     </form>
   )
