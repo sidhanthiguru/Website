@@ -66,7 +66,7 @@ export default function AboutPage() {
                 icon: '🌱',
                 title: 'Sidhanthi Guru Health Trust',
                 sub: 'Est. 2008 · Reg. No. 1597',
-                desc: 'The parent charitable trust — dedicated to spreading yoga and naturopathy awareness through community camps, free sessions, and educational programs for all age groups across Chennai and beyond.',
+                desc: 'The parent charitable trust — dedicated to spreading yoga and naturopathy awareness through community camps, free sessions, and educational programs for all age groups across Chidambaram and beyond.',
                 cta: '/about',
               },
               {
@@ -159,7 +159,7 @@ export default function AboutPage() {
                 Dr. D. Uma Maheswari is the visionary founder of Sidhanthi Guru Yoga Academy. With a deep commitment to promoting yoga as a vehicle for personal and social transformation, Dr. Uma Maheswari has dedicated 17 years to building an institution that combines ancient yogic wisdom with contemporary wellness practices.
               </p>
               <p>
-                Her leadership has guided the Academy to become a trusted center for yoga education in Chennai, known for its authentic teachings, professional instruction, and student-centered approach. Her expertise and passion continue to inspire both students and teachers, fostering an environment where deep, lasting transformation is possible.
+                Her leadership has guided the Academy to become a trusted center for yoga education in Chidambaram, known for its authentic teachings, professional instruction, and student-centered approach. Her expertise and passion continue to inspire both students and teachers, fostering an environment where deep, lasting transformation is possible.
               </p>
               <p>
                 Under her guidance, the trust has served <strong>school children, homemakers, working professionals, and senior citizens</strong> alike — making holistic wellness truly accessible to all.

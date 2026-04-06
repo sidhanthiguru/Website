@@ -10,7 +10,7 @@ export default function AboutSection() {
           <div className="about-location__header">
             <h2>About us &amp; location</h2>
             <p>
-              We're a Chennai-based Yoga academy dedicated to helping you find balance, strength, and inner peace. 
+              We're a Chidambaram-based Yoga academy dedicated to helping you find balance, strength, and inner peace. 
               Whether you're looking to relieve stress, improve flexibility, or deepen your spiritual practice, 
               our doors are open for you.
             </p>
@@ -33,12 +33,12 @@ export default function AboutSection() {
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
-              <span>Sidhanthi Guru Yoga Academy, Chennai, Tamil Nadu, India</span>
+              <span>9PM6+498 Chidambaram, Tamil Nadu</span>
             </div>
             
             <div className="about-location__map-container">
               <iframe
-                src="https://maps.google.com/maps?q=Sidhanthi%20Guru%20Yoga%20Academy,%20Chennai&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=9PM6%2B498%20Chidambaram,%20Tamil%20Nadu&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

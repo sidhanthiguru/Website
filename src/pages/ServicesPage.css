@@ -622,6 +622,11 @@
   .courses-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .courses-grid > *:last-child:nth-child(odd) {
+    grid-column: span 2;
+    justify-self: center;
+    width: calc(50% - 10px);
+  }
 
   .modalities-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -649,7 +654,12 @@
 
 @media (max-width: 480px) {
   .courses-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .courses-grid > *:last-child:nth-child(odd) {
+    grid-column: span 2;
+    justify-self: center;
+    width: calc(50% - 10px);
   }
 
   .modalities-grid {

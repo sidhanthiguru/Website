@@ -35,7 +35,7 @@ const programCards = [
 const serviceImages = {
   general:  '/images/attachments/IMG_0100.JPG',
   therapy:  '/images/attachments/IMG_0105.JPG',
-  prenatal: '/images/attachments (1)/IMG_0388.JPG',
+  prenatal: '/images/attachments/IMG_0059.JPG',
   postnatal:'/images/attachments (1)/IMG_0391.JPG',
 }
 

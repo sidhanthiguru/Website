@@ -46,7 +46,7 @@ export default function HomePage() {
         rating={{ score: '4.9/5', label: 'with 300+ reviews' }}
         title="A Journey of Holistic Healing and Awareness"
         accentWords="Holistic Healing"
-        subtitle="Unlock Your True Potential — 17 Years of Dedicated Yoga Excellence in Chennai"
+        subtitle="Unlock Your True Potential — 17 Years of Dedicated Yoga Excellence in Chidambaram"
         body="Welcome to Sidhanthi Guru Yoga Academy, where ancient yogic wisdom meets modern wellness practices. Since 2008, we have been guiding individuals toward holistic transformation through authentic yoga practice. Our mission is simple yet powerful: World Transformation through Self Transformation."
         primaryCta={{ label: 'Explore Our Programs', to: '/services' }}
         secondaryCta={{ label: 'Contact Us', to: '/contact' }}

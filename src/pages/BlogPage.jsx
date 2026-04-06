@@ -17,10 +17,12 @@ export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isFeaturedExpanded, setIsFeaturedExpanded] = useState(false)
+  const [selectedPost, setSelectedPost] = useState(null)
 
   useEffect(() => {
     const q = query(
-      collection(db, 'blogs'), 
+      collection(db, 'blogs'),
       where('isArchived', '==', false),
       orderBy('createdAt', 'desc')
     )
@@ -59,21 +61,36 @@ export default function BlogPage() {
         <section className="section overflow-hidden">
           <div className="container">
             <ScrollReveal>
-              <div className="featured-post glass-card">
-                <div className="featured-post__image-wrapper">
-                  <img src={featuredPost.photoUrl} alt={featuredPost.title} className="featured-post__image" />
-                  <div className="featured-post__badge">Featured</div>
-                </div>
-                <div className="featured-post__content">
-                  <span className="blog-meta">
-                    {featuredPost.category} • {featuredPost.createdAt?.toDate ? featuredPost.createdAt.toDate().toLocaleDateString() : 'Recent'}
-                  </span>
-                  <h2>{featuredPost.title}</h2>
-                  <p>{featuredPost.excerpt}</p>
-                  <div className="featured-post__footer">
-                    <span className="blog-author">By {featuredPost.author}</span>
-                    <button className="btn-link">Read Article →</button>
+              <div className="featured-post-container">
+                <div className="featured-post glass-card">
+                  <div className="featured-post__image-wrapper">
+                    <img src={featuredPost.photoUrl} alt={featuredPost.title} className="featured-post__image" />
+                    <div className="featured-post__badge">Featured</div>
                   </div>
+                  <div className="featured-post__content">
+                    <span className="blog-meta">
+                      {featuredPost.category} • {featuredPost.createdAt?.toDate ? featuredPost.createdAt.toDate().toLocaleDateString() : 'Recent'}
+                    </span>
+                    <h2>{featuredPost.title}</h2>
+                    <p>{featuredPost.excerpt}</p>
+                    <div className="featured-post__footer">
+                      <span className="blog-author">By {featuredPost.author}</span>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => setIsFeaturedExpanded(!isFeaturedExpanded)}
+                      >
+                        {isFeaturedExpanded ? 'Show Less' : 'Read Article →'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {isFeaturedExpanded && (
+                    <div className="featured-post-expanded-content">
+                      <div className="blog-card-full-text">
+                        <div dangerouslySetInnerHTML={{ __html: featuredPost.content || featuredPost.excerpt }} />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </ScrollReveal>
@@ -126,7 +143,12 @@ export default function BlogPage() {
                       </span>
                       <h3>{post.title}</h3>
                       <p>{post.excerpt}</p>
-                      <button className="btn-link mt-auto">Read More →</button>
+                      <button
+                        className="btn-link mt-auto inline-flex items-center gap-2"
+                        onClick={() => setSelectedPost(post)}
+                      >
+                        Read More →
+                      </button>
                     </div>
                   </div>
                 </ScrollReveal>
@@ -142,27 +164,31 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <SectionDivider />
 
-      {/* Newsletter */}
-      <section className="section overflow-hidden">
-        <div className="container">
-          <ScrollReveal>
-            <div className="newsletter-cta">
-              <div className="newsletter-cta__bg"></div>
-              <div className="newsletter-cta__content">
-                <h2>Join Our Newsletter</h2>
-                <p>Get the latest articles, academy news, and wellness tips delivered straight to your inbox.</p>
-                <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-                  <input type="email" placeholder="Enter your email address" required />
-                  <button type="submit" className="btn btn-primary">Subscribe</button>
-                </form>
-                <p className="newsletter-disclaimer">We respect your privacy. Unsubscribe at any time.</p>
+
+      {/* Blog Article Modal */}
+      {selectedPost && (
+        <div className="blog-modal-overlay" onClick={() => setSelectedPost(null)}>
+          <div className="blog-modal" onClick={e => e.stopPropagation()}>
+            <button className="blog-modal-close" onClick={() => setSelectedPost(null)}>&times;</button>
+            <div className="blog-modal-container">
+              <div className="blog-modal-image">
+                <img src={selectedPost.photoUrl} alt={selectedPost.title} />
+              </div>
+              <div className="blog-modal-content">
+                <span className="blog-meta">
+                  {selectedPost.category} • {selectedPost.createdAt?.toDate ? selectedPost.createdAt.toDate().toLocaleDateString() : 'Recent'}
+                </span>
+                <h2>{selectedPost.title}</h2>
+                <div className="article-author">By {selectedPost.author}</div>
+                <div className="blog-modal-text">
+                  <div dangerouslySetInnerHTML={{ __html: selectedPost.content || selectedPost.excerpt }} />
+                </div>
               </div>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
-      </section>
+      )}
     </div>
   )
 }

@@ -28,7 +28,7 @@ const features = [
       </svg>
     ),
     title: 'Online & Offline Access',
-    description: 'All yoga programs, therapy sessions, prenatal and postnatal care, and hospital consultations are available both in-person at our Chennai centre and online — making holistic wellness accessible to everyone.',
+    description: 'All yoga programs, therapy sessions, prenatal and postnatal care, and hospital consultations are available both in-person at our Chidambaram centre and online — making holistic wellness accessible to everyone.',
   },
   {
     icon: (

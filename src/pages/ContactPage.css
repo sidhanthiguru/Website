@@ -69,18 +69,21 @@
   font-weight: 700;
 }
 
-/* Map placeholder */
-.contact-map-placeholder {
+/* Map section */
+.contact-map-container {
   width: 100%;
-  height: 350px;
-  background: var(--color-surface);
+  height: 450px; /* Increased height for better visibility on contact page */
   border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  color: var(--color-text-muted);
-  border: 2px dashed var(--color-border);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+}
+
+.contact-map {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 @media (max-width: 768px) {
