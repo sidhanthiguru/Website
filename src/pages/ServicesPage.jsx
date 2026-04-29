@@ -5,6 +5,7 @@ import ScrollReveal from '../components/ScrollReveal/ScrollReveal'
 import SectionDivider from '../components/SectionDivider/SectionDivider'
 import NaturopathyCarousel from '../components/NaturopathyCarousel/NaturopathyCarousel'
 import { services, courses, naturopathyModalities } from '../data/services'
+import { products } from '../data/products'
 import { faqItems } from '../data/faq'
 import './ServicesPage.css'
 
@@ -33,10 +34,10 @@ const programCards = [
 ]
 
 const serviceImages = {
-  general:  '/images/attachments/IMG_0100.JPG',
-  therapy:  '/images/attachments/IMG_0105.JPG',
+  general: '/images/attachments/IMG_0100.JPG',
+  therapy: '/images/attachments/IMG_0105.JPG',
   prenatal: '/images/attachments/IMG_0059.JPG',
-  postnatal:'/images/attachments (1)/IMG_0391.JPG',
+  postnatal: '/images/attachments (1)/IMG_0391.JPG',
 }
 
 /* ── Data for Consultation carousel ─────────────────── */
@@ -80,6 +81,7 @@ export default function ServicesPage() {
         subtitle="Discover Your Path to Transformation"
         body="At Sidhanthi Guru Yoga Academy, we offer authentic yoga programs, structured courses, and holistic naturopathy care — available Online and Offline — tailored to every individual's health and wellness goals."
         primaryCta={{ label: 'Contact Us', to: '/contact' }}
+        secondaryCta={{ label: 'View Products', to: '#products', className: 'btn-primary' }}
       />
 
       <SectionDivider />
@@ -312,10 +314,44 @@ export default function ServicesPage() {
             </div>
           </ScrollReveal>
         </div>
+      </section>      <SectionDivider />
+
+      {/* ── SECTION E: Wellness Products ─────────────────────────── */}
+      <section id="products" className="section wellness-products overflow-hidden">
+        <div className="container">
+          <ScrollReveal>
+            <div className="section-header text-center mx-auto">
+              <span className="section-subtitle">Yoga & Naturopathy Essentials</span>
+              <h2>Wellness Products</h2>
+              <p>
+                Enhance your practice with our curated selection of authentic yoga accessories, shatkarma tools, and wellness guides — designed to support your journey to holistic health.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="products-grid">
+            {products.map((product, i) => (
+              <ScrollReveal key={product.id} delay={i * 100}>
+                <div className="product-card">
+                  <div className="product-card__image-wrapper">
+                    <img src={product.image} alt={product.name} className="product-card__image" />
+                    <span className="product-card__category">{product.category}</span>
+                  </div>
+                  <div className="product-card__content">
+                    <h3 className="product-card__name">{product.name}</h3>
+                    <p className="product-card__desc">{product.description}</p>
+                    <Link to="/contact" className="btn btn-primary btn-sm">
+                      Enquire Now
+                    </Link>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
       </section>
 
-
-
+      <SectionDivider />
 
       {/* ── FAQ ──────────────────────────────────────────────────────── */}
       <section className="section section-alt overflow-hidden">

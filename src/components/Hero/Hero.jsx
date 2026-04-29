@@ -68,7 +68,10 @@ export default function Hero({
               </Link>
             )}
             {secondaryCta && (
-              <Link to={secondaryCta.to} className="btn btn-secondary">
+              <Link 
+                to={secondaryCta.to} 
+                className={`btn ${secondaryCta.className || 'btn-secondary'}`}
+              >
                 {secondaryCta.label}
               </Link>
             )}

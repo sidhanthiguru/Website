@@ -49,7 +49,7 @@ export default function HomePage() {
         subtitle="Unlock Your True Potential — 17 Years of Dedicated Yoga Excellence in Chidambaram"
         body="Welcome to Sidhanthi Guru Yoga Academy, where ancient yogic wisdom meets modern wellness practices. Since 2008, we have been guiding individuals toward holistic transformation through authentic yoga practice. Our mission is simple yet powerful: World Transformation through Self Transformation."
         primaryCta={{ label: 'Explore Our Programs', to: '/services' }}
-        secondaryCta={{ label: 'Contact Us', to: '/contact' }}
+        secondaryCta={{ label: 'View Products', to: '/services#products', className: 'btn-primary' }}
         images={heroImages}
       >
         <div className="hero__badge">
