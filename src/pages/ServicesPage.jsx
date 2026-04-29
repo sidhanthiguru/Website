@@ -335,7 +335,6 @@ export default function ServicesPage() {
                 <div className="product-card">
                   <div className="product-card__image-wrapper">
                     <img src={product.image} alt={product.name} className="product-card__image" />
-                    <span className="product-card__category">{product.category}</span>
                   </div>
                   <div className="product-card__content">
                     <h3 className="product-card__name">{product.name}</h3>
