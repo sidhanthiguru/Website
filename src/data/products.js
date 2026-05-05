@@ -75,5 +75,14 @@ export const products = [
     description: 'A yoga wheel is designed to support the body during stretches and backbends. It helps practitioners safely deepen poses, especially those involving the spine, chest, and shoulders. The wheel rolls along the back, assisting in opening tight muscles and improving posture.',
     image: '/images/product image/Yoga Wheel .jpeg',
     category: 'Accessories'
+  },
+  {
+    id: 'yoga-prop-kit',
+    name: 'Yoga Essentials Kit (Belt, Blocks & Bricks)',
+    description: 'A comprehensive set of yoga accessories to enhance your practice. The Yoga Belt is an adjustable strap that improves flexibility and alignment, helping you reach difficult positions without strain. Yoga Blocks provide lightweight support by bringing the ground closer to your body, while Yoga Bricks offer firmer, stable support for advanced practices. Together, these tools ensure safe and effective progression in every pose.',
+    image: '/images/product image/WhatsApp Image 2026-04-28 at 4.14.20 PM.jpeg',
+    category: 'Accessories'
   }
 ];
+
+
