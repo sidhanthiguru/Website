@@ -1,0 +1,138 @@
+# Clone Body & Mind Pilates Template Site
+
+Replicate the Framer-based Pilates studio website at `pilatestemplate.framer.ai` as a standalone Vite + vanilla HTML/CSS/JS project with identical design, content, animations, and color theme.
+
+## Reference Site Analysis
+
+![Site recording](C:/Users/hp/.gemini/antigravity/brain/98791068-af0e-4dc9-8c6e-39a89094da84/site_visual_analysis_1773337649032.webp)
+
+### Design System
+
+| Token | Value |
+|---|---|
+| **Primary Font** | `Manrope` (Google Fonts) — headings & body |
+| **Accent Font** | `Playfair Display` (Google Fonts) — hero emphasis text |
+| **Primary Accent** | `#16802b` (green — buttons, icons) |
+| **Text Color** | `#192119` (dark charcoal-green) |
+| **Background** | `#ffffff` (white) |
+| **Card/Section BG** | `#f5f5f5` (light grey) |
+| **Border Radius** | `24px–32px` on cards and images |
+
+### Animations
+- **Scroll reveal** — fade-in + slide-up on viewport entry (IntersectionObserver)
+- **Button hover** — subtle opacity/scale change
+- **Card hover** — lift + shadow transition
+- **FAQ accordion** — smooth height transition with rotating `+` icon
+- **Reviews** — horizontal scrolling marquee / carousel
+
+---
+
+## Proposed Changes
+
+### Project Scaffold
+
+#### [NEW] `package.json`
+Vite project with no framework (vanilla JS). Minimal dependencies.
+
+#### [NEW] `vite.config.js`
+Standard Vite config.
+
+#### [NEW] `index.html`
+Single-page HTML with all sections:
+- `<nav>` — navigation bar
+- `#hero` — hero section
+- `#instructors` — instructor cards
+- `#classes` — class type cards
+- `#schedule` — weekly schedule grid
+- `#pricing` — 3 pricing cards
+- `#reviews` — testimonials carousel
+- `#studio` — studio features
+- `#location` — about & map
+- `#faq` — accordion FAQ
+- `<footer>` — site footer
+
+---
+
+### Styles
+
+#### [NEW] `style.css`
+Complete CSS covering:
+- **CSS custom properties** for the entire color/font/spacing system
+- **Google Fonts import** — Manrope (400, 500, 600) + Playfair Display (400, 700)
+- **Section layouts** — centered max-width containers, consistent padding
+- **Navigation** — horizontal nav with logo, section links
+- **Hero** — large centered heading (Manrope + Playfair Display mix), subtext, CTA button, 3-image grid below
+- **Cards** — large border-radius, subtle hover lift/shadow
+- **Schedule** — tab-style day selector with time/class grid
+- **Pricing** — 3-column card layout, "Most Popular" badge on middle card
+- **Reviews** — horizontally scrolling cards or infinite marquee
+- **Studio** — icon + text cards (3 features)
+- **Location** — text + embedded map image
+- **FAQ** — collapsible accordion with `+`/`−` toggle
+- **Footer** — dark or neutral footer with logo + copyright
+- **Responsive** — mobile-first breakpoints at 768px and 1024px
+- **Animations** — `.reveal` class for scroll-triggered entrance
+
+---
+
+### Scripts
+
+#### [NEW] `main.js`
+JavaScript for:
+- **Scroll reveal** — IntersectionObserver adding `.visible` class to `.reveal` elements
+- **FAQ accordion** — click handler toggling answer visibility with smooth transitions
+- **Schedule tabs** — day selector switching visible schedule content
+- **Smooth scrolling** — anchor links scroll smoothly to sections
+- **Mobile nav toggle** — hamburger menu for small screens
+
+---
+
+### Assets
+
+#### [NEW] `assets/` directory
+- Generated placeholder images for hero (3 Pilates images) and instructor photos using the `generate_image` tool
+- SVG icons for studio features (leaf, sun, sparkle)
+
+---
+
+## Sections Breakdown
+
+| Section | Layout | Key Details |
+|---|---|---|
+| **Nav** | Horizontal, logo left, links right | Links: Instructors, Classes, Schedule, Pricing, Reviews, Studio, Location, FAQ |
+| **Hero** | Centered text + 3-col image grid | H1 uses Manrope + "body & mind" in Playfair Display italic. "4.9/5 with 300+ reviews" badge. Green CTA button |
+| **Instructors** | 3-column card grid | Photo + name + specialty. Cards: Emily Carter, Jake Rivera, Sophie Lin |
+| **Classes** | 2×2 or 4-column card grid | 4 types: Beginners, Stretch & Mobility, Strength & Power, Pilates for Surfers |
+| **Schedule** | Tab bar + time grid | Mon–Fri tabs, each showing AM/PM classes with instructor |
+| **Pricing** | 3-column cards | Single ($25), 5-Pack ($100, "Most Popular"), Unlimited ($180) |
+| **Reviews** | Horizontal scroll / marquee | 4 testimonials: Sophia Lee, David R., Olivia S., Mona S. |
+| **Studio** | 3-column icon cards | Cozy atmosphere, Bright lighting, Latest equipment |
+| **Location** | Text + map | Address: 123 Ocean Drive, San Diego, CA |
+| **FAQ** | Accordion list | 4 questions with expand/collapse |
+| **Footer** | Centered, minimal | Logo + copyright © 2025 |
+
+---
+
+## Verification Plan
+
+### Automated Tests
+No unit tests needed — this is a static marketing site.
+
+### Browser Verification
+1. Run `npm run dev` to start the dev server
+2. Open in browser and scroll through all sections
+3. Compare each section visually against the reference site
+4. Verify:
+   - Fonts load correctly (Manrope + Playfair Display)
+   - Color palette matches (#16802b green, #192119 text, #f5f5f5 cards)
+   - Scroll-reveal animations trigger on viewport entry
+   - FAQ accordion expands/collapses smoothly
+   - Schedule tabs switch correctly
+   - Pricing cards display correctly with "Most Popular" badge
+   - Reviews scroll horizontally
+   - Responsive layout works at mobile (375px), tablet (768px), desktop (1280px)
+   - All anchor links scroll smoothly to their sections
+
+### Manual Verification
+- Open the reference site (`pilatestemplate.framer.ai`) side-by-side with the clone
+- Visually compare section-by-section for fidelity

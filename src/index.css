@@ -1,0 +1,425 @@
+/* ===========================
+   SIDHANTHI GURU YOGA ACADEMY
+   Global Design System
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/images/Poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/images/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/images/Poppins/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/images/Poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+:root {
+  /* Colors – Sacred Garden Palette (logo-derived) */
+  --color-primary: #5FAF4E;           /* Leaf Green */
+  --color-primary-hover: #2F6B2F;     /* Deep Nature Green */
+  --color-primary-light: rgba(95, 175, 78, 0.08);
+  --color-text: #1F2A1F;              /* Dark Elegant Green */
+  --color-text-muted: #4A5D4A;        /* Muted Nature Text */
+  --color-bg: #EDF7ED;               /* Soft Mint Green */
+  --color-surface: #FFF8EE;          /* Warm Cream (golden aura tint) */
+  --color-surface-alt: #EAF4FB;      /* Soft Sky Blue (logo sky tint) */
+  --color-border: #C8E6C9;           /* Vibrant Soft Green Border */
+  --color-white: #ffffff;
+  --color-accent-gold: #F5B43C;      /* Golden Aura (logo) */
+  --color-accent-sky: #A9D6F5;       /* Soft Sky Blue (logo) */
+
+  /* Typography */
+  --font-primary: 'Poppins', sans-serif;
+  --font-accent: 'Playfair Display', serif;
+
+  /* Spacing */
+  --radius-sm: 12px;
+  --radius-md: 24px;
+  --radius-lg: 32px;
+  --max-width: 1200px;
+  --section-padding: 100px 0;
+  --gap-cards: 24px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(31, 42, 31, 0.06);
+  --shadow-md: 0 8px 24px rgba(31, 42, 31, 0.08);
+  --shadow-lg: 0 16px 48px rgba(31, 42, 31, 0.12);
+  --shadow-hover: 0 12px 32px rgba(31, 42, 31, 0.14);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.6s ease;
+}
+
+/* ===== RESET ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text);
+  /* Rich colorful gradient — leaf green → warm cream → sky blue (logo-inspired) */
+  background: linear-gradient(160deg,
+    #D4EDDA 0%,
+    #FFF3D6 40%,
+    #D6EEF9 80%,
+    #E8F5E9 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+p {
+  color: var(--color-text-muted);
+  max-width: 680px;
+}
+
+.accent-text {
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+/* ===== LAYOUT ===== */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: var(--section-padding);
+}
+
+.section-alt {
+  background: var(--color-surface);
+  backdrop-filter: blur(0px);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-header p {
+  margin: 16px auto 0;
+  font-size: 1.1rem;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.01em;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #5FAF4E 0%, #F5B43C 100%);
+  color: var(--color-white);
+  box-shadow: 0 4px 16px rgba(245, 180, 60, 0.28);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2F6B2F 0%, #e0a020 100%);
+  transform: scale(1.04);
+  box-shadow: 0 8px 24px rgba(245, 180, 60, 0.38);
+}
+
+.btn-secondary {
+  background: rgba(169, 214, 245, 0.18);
+  color: #1B6A9A;
+  border: 2px solid #A9D6F5;
+}
+
+.btn-secondary:hover {
+  background: rgba(169, 214, 245, 0.35);
+  border-color: #7BBFE8;
+  color: #0E4C72;
+  transform: scale(1.03);
+}
+
+.btn-link {
+  color: #C8860A;
+  font-weight: 700;
+  padding: 0;
+  gap: 6px;
+}
+
+.btn-link:hover {
+  color: #F5B43C;
+  gap: 10px;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.card-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 28px;
+}
+
+.card-body h3 {
+  margin-bottom: 12px;
+}
+
+.card-body p {
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+
+/* ===== GRID ===== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap-cards);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-cards);
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 64px 0;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+}
+
+/* ===== SECTION UTILITIES ===== */
+.section-curved {
+  background-color: var(--color-surface);
+  position: relative;
+  padding: 180px 0; /* More breathable space */
+  margin: 100px 0; /* Significant gap from dividers to avoid "smudging" */
+  z-index: 2;
+  overflow: visible;
+}
+
+/* Creating the "bending" curve effect - more subtle and precise */
+.section-curved::before,
+.section-curved::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px; /* Shorter curve */
+  background-color: var(--color-surface);
+  z-index: -1;
+}
+
+.section-curved::before {
+  top: -59px;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.section-curved::after {
+  bottom: -59px;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+
+.section-curved--no-bottom::after {
+  display: none;
+}
+
+.section-curved--no-bottom {
+  margin-bottom: 0;
+}
+
+/* ===== AUTH UTILITIES ===== */
+.auth-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top-color: var(--color-primary, #000);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  border: 1px solid #fecaca;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.min-h-screen { min-height: 100vh; }

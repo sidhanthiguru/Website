@@ -1,0 +1,200 @@
+/* ================================
+   HERO SECTION — Pilates-inspired layout
+   Stars → Heading → Subtitle → CTA → 3 images
+   ================================ */
+
+.hero {
+  padding: 140px 0 80px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === STARS RATING === */
+.hero__rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 32px;
+}
+
+.hero__stars {
+  display: flex;
+  gap: 4px;
+  font-size: 1.4rem;
+  color: #F5B43C;
+  line-height: 1;
+}
+
+.hero__stars svg {
+  width: 22px;
+  height: 22px;
+  fill: #F5B43C;
+}
+
+.hero__rating-text {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.hero__rating-text strong {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* === TITLE === */
+.hero__title {
+  max-width: 700px;
+  margin-bottom: 20px;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+/* === SUBTITLE === */
+.hero__subtitle {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+  max-width: 480px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+/* === CTA === */
+.hero__ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 56px;
+}
+
+/* === IMAGE GRID — 3 columns, center is taller/larger === */
+.hero__images {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 20px;
+  max-width: 960px;
+  width: 100%;
+  align-items: end;
+}
+
+.hero__img-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hero__img-wrap:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Side images — shorter */
+.hero__img-wrap--side {
+  aspect-ratio: 3 / 4;
+}
+
+/* Center image — taller */
+.hero__img-wrap--center {
+  aspect-ratio: 4 / 5;
+}
+
+.hero__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* === TRUST BADGE (optional children area) === */
+.hero__badge {
+  display: inline-flex;
+  gap: 24px;
+  background: var(--color-white);
+  padding: 14px 28px;
+  border-radius: 100px;
+  box-shadow: var(--shadow-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 48px;
+}
+
+.hero__badge span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 768px) {
+  .hero {
+    padding: 120px 0 48px;
+  }
+
+  .hero__title {
+    font-size: 2.2rem;
+  }
+
+  .hero__images {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+    gap: 16px;
+  }
+
+  .hero__img-wrap--side,
+  .hero__img-wrap--center {
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero__badge {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+    width: 100%;
+  }
+
+  .hero__badge span {
+    background: var(--color-white);
+    padding: 8px 16px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero__ctas {
+    margin-bottom: 40px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero__images {
+    max-width: 700px;
+    gap: 16px;
+  }
+
+  .hero__title {
+    font-size: 2.8rem;
+  }
+}

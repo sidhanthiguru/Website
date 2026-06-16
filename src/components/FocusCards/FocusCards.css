@@ -1,0 +1,117 @@
+.focus-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 24px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .focus-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .focus-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.focus-card {
+  border-radius: var(--radius-lg);
+  position: relative;
+  background-color: var(--color-surface);
+  overflow: hidden;
+  height: 400px; /* Base height for the card */
+  width: 100%;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .focus-card {
+    height: 480px; /* Taller on larger screens */
+  }
+}
+
+/* Image styling */
+.focus-card__image {
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+/* Blur effect applied to un-hovered cards when one IS hovered */
+.focus-card--blurred {
+  filter: blur(4px);
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+.focus-card:hover .focus-card__image {
+  transform: scale(1.05); /* Slight zoom on image when hovered */
+}
+
+/* Overlay gradient */
+.focus-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.focus-card__overlay--visible {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  /* On mobile, usually better to keep overlays visible always, or rely on tap */
+  .focus-card__overlay {
+    opacity: 1; 
+  }
+  .focus-card--blurred {
+    filter: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.focus-card__content {
+  color: var(--color-white);
+  transform: translateY(16px);
+  transition: transform 0.4s ease;
+}
+
+.focus-card__overlay--visible .focus-card__content {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .focus-card__content {
+    transform: translateY(0);
+  }
+}
+
+.focus-card__title {
+  color: var(--color-white);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.focus-card__description {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}

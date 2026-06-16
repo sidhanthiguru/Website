@@ -1,0 +1,50 @@
+/* ── Section Divider ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: 18px 0 10px;
+  user-select: none;
+}
+
+.section-divider__line {
+  flex: 1;
+  height: 1.5px;
+  background: #2F6B2F;
+  opacity: 0.5;
+}
+
+.section-divider__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0 14px;
+  color: #2F6B2F;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.section-divider:hover .section-divider__icon {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-divider {
+    padding: 12px 0 6px;
+  }
+
+  .section-divider__icon svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .section-divider__icon {
+    padding: 0 10px;
+  }
+}

@@ -1,0 +1,273 @@
+/* ================================
+   RESIZABLE GLASSMORPHISM NAVBAR
+   Logo LEFT — Menu RIGHT
+   Full width → floating pill on scroll
+   ================================ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  padding: 18px 32px;
+  transition: padding 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* The visible bar — this resizes */
+.navbar__bar {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  border-radius: 100px;
+  background: transparent;
+  transition:
+    max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.45s ease,
+    backdrop-filter 0.45s ease,
+    box-shadow 0.45s ease,
+    padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    border 0.45s ease,
+    gap 0.45s ease;
+  border: 1.5px solid transparent;
+  gap: 24px;
+}
+
+/* === SCROLLED → GLASSMORPHISM PILL === */
+.navbar--scrolled {
+  padding: 12px 32px;
+}
+
+.navbar--scrolled .navbar__bar {
+  max-width: 960px;
+  padding: 10px 32px;
+  gap: 40px;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: saturate(200%) blur(24px);
+  -webkit-backdrop-filter: saturate(200%) blur(24px);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* === LOGO (left) === */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--color-text);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  transition: gap 0.35s ease, font-size 0.35s ease;
+  flex-shrink: 0;
+}
+
+.navbar__logo-image {
+  height: 38px;
+  width: auto;
+  border-radius: 4px;
+  transition: height 0.35s ease;
+}
+
+.navbar--scrolled .navbar__logo {
+  font-size: 1.05rem;
+  gap: 6px;
+}
+
+.navbar--scrolled .navbar__logo-image {
+  height: 32px;
+}
+
+/* === NAV LINKS (right) === */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.navbar__link {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+  position: relative;
+  padding: 4px 0;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #5FAF4E, #F5B43C);
+  border-radius: 2px;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: #C8860A; /* Logo golden amber */
+}
+
+.navbar__link--active::after,
+.navbar__link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.navbar--scrolled .navbar__link {
+  font-size: 0.88rem;
+}
+
+.navbar--scrolled .navbar__links {
+  gap: 22px;
+}
+
+/* === CTA BUTTON in navbar === */
+.navbar__cta {
+  padding: 6px 16px;
+  font-size: 0.78rem;
+  border-radius: 100px;
+  transition: all var(--transition-fast), padding 0.35s ease, font-size 0.35s ease;
+  flex-shrink: 0;
+}
+
+.navbar--scrolled .navbar__cta {
+  padding: 8px 18px;
+  font-size: 0.82rem;
+}
+
+/* ================================
+   HAMBURGER
+   ================================ */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px;
+  z-index: 1001;
+}
+
+.navbar__hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+  transform-origin: center;
+}
+
+.navbar__hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.navbar__hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar__hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ================================
+   MOBILE
+   ================================ */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 16px;
+  }
+
+  .navbar--scrolled {
+    padding: 8px 16px;
+  }
+
+  .navbar__bar {
+    padding: 12px 18px;
+  }
+
+  .navbar--scrolled .navbar__bar {
+    max-width: 100%;
+    border-radius: 22px;
+    padding: 10px 18px;
+  }
+
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  .navbar__links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    height: 100dvh;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: saturate(180%) blur(28px);
+    -webkit-backdrop-filter: saturate(180%) blur(28px);
+    flex-direction: column;
+    padding: 100px 32px 32px;
+    gap: 24px;
+    box-shadow:
+      -4px 0 30px rgba(0, 0, 0, 0.08),
+      inset 1px 0 0 rgba(255, 255, 255, 0.6);
+    transition: right var(--transition-base);
+    align-items: flex-start;
+    border-radius: 0;
+  }
+
+  .navbar__links--open {
+    right: 0;
+  }
+
+  .navbar__link {
+    font-size: 1.1rem !important;
+  }
+
+  .navbar__cta {
+    margin-top: 16px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    font-size: 0.95rem !important;
+    padding: 12px 24px !important;
+  }
+}
+
+/* Overlay */
+.navbar__overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar__overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-base);
+  }
+
+  .navbar__overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
