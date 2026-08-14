@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { 
-  BookOpen, 
-  PlusCircle, 
-  MessageSquare, 
-  LogOut, 
-  ExternalLink, 
-  Layout, 
-  Clock, 
-  CheckCircle, 
+import {
+  BookOpen,
+  PlusCircle,
+  MessageSquare,
+  LogOut,
+  ExternalLink,
+  Layout,
+  Clock,
+  CheckCircle,
   Users,
   Menu,
   X,
@@ -16,18 +16,19 @@ import {
   Archive,
   ArchiveRestore,
   Eye,
-  EyeOff
+  EyeOff,
+  Edit
 } from 'lucide-react'
-import { 
-  collection, 
-  addDoc, 
-  onSnapshot, 
-  query, 
-  orderBy, 
-  deleteDoc, 
-  doc, 
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  query,
+  orderBy,
+  deleteDoc,
+  doc,
   updateDoc,
-  serverTimestamp 
+  serverTimestamp
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useAuth } from '../context/AuthContext'
@@ -43,11 +44,11 @@ export default function DashboardPage() {
   // Blog State
   const [blogs, setBlogs] = useState([])
   const [blogLoading, setBlogLoading] = useState(true)
-  
+
   // Inquiry State
   const [inquiries, setInquiries] = useState([])
   const [inquiriesLoading, setInquiriesLoading] = useState(true)
-  
+
   // Form State
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('Wellness')
@@ -55,6 +56,7 @@ export default function DashboardPage() {
   const [content, setContent] = useState('')
   const [photoUrlInput, setPhotoUrlInput] = useState('')
   const [isPublishing, setIsPublishing] = useState(false)
+  const [editingBlogId, setEditingBlogId] = useState(null)
 
   // Fetch Blogs
   useEffect(() => {
@@ -95,38 +97,64 @@ export default function DashboardPage() {
     }
   }
 
-  const handlePublish = async (e) => {
+  const resetForm = () => {
+    setTitle('')
+    setCategory('Wellness')
+    setExcerpt('')
+    setContent('')
+    setPhotoUrlInput('')
+    setEditingBlogId(null)
+  }
+
+  const startEdit = (post) => {
+    setTitle(post.title)
+    setCategory(post.category || 'Wellness')
+    setExcerpt(post.excerpt)
+    setContent(post.content)
+    setPhotoUrlInput(post.photoUrl)
+    setEditingBlogId(post.id)
+    setActiveTab('create')
+    closeSidebar()
+  }
+
+  const handleSubmitBlog = async (e) => {
     e.preventDefault()
-    
+
     setIsPublishing(true)
     try {
-      // Use provided URL or default fallback
       const photoUrl = photoUrlInput.trim() || 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800'
-      
-      // 1. Save to Firestore
-      await addDoc(collection(db, 'blogs'), {
-        title,
-        category,
-        excerpt,
-        content,
-        photoUrl,
-        author: currentUser.email.split('@')[0],
-        authorEmail: currentUser.email,
-        isArchived: false,
-        createdAt: serverTimestamp()
-      })
 
-      // 3. Reset Form
-      setTitle('')
-      setCategory('Wellness')
-      setExcerpt('')
-      setContent('')
-      setPhotoUrlInput('')
+      if (editingBlogId) {
+        // Update existing blog
+        await updateDoc(doc(db, 'blogs', editingBlogId), {
+          title,
+          category,
+          excerpt,
+          content,
+          photoUrl
+        })
+        alert('Blog updated successfully!')
+      } else {
+        // Create new blog
+        await addDoc(collection(db, 'blogs'), {
+          title,
+          category,
+          excerpt,
+          content,
+          photoUrl,
+          author: currentUser.email.split('@')[0],
+          authorEmail: currentUser.email,
+          isArchived: false,
+          createdAt: serverTimestamp()
+        })
+        alert('Blog published successfully!')
+      }
+
+      resetForm()
       setActiveTab('blogs')
-      alert('Blog published successfully!')
     } catch (err) {
-      console.error('Error publishing blog:', err)
-      alert(`Failed to publish blog: ${err.message}`)
+      console.error('Error saving blog:', err)
+      alert(`Failed to save blog: ${err.message}`)
     } finally {
       setIsPublishing(false)
     }
@@ -169,6 +197,9 @@ export default function DashboardPage() {
   const closeSidebar = () => setSidebarOpen(false)
 
   const handleTabChange = (tab) => {
+    if (tab !== 'create') {
+      resetForm()
+    }
     setActiveTab(tab)
     closeSidebar()
   }
@@ -240,26 +271,26 @@ export default function DashboardPage() {
           </button>
         </div>
         <div className="sidebar-nav">
-          <button 
+          <button
             className={`sidebar-link ${activeTab === 'blogs' ? 'active' : ''}`}
             onClick={() => handleTabChange('blogs')}
           >
             <BookOpen size={20} /> Blogs
           </button>
-          <button 
+          <button
             className={`sidebar-link ${activeTab === 'create' ? 'active' : ''}`}
             onClick={() => handleTabChange('create')}
           >
-            <PlusCircle size={20} /> Create Blog
+            <PlusCircle size={20} /> {editingBlogId ? 'Edit Blog' : 'Create Blog'}
           </button>
-          <button 
+          <button
             className={`sidebar-link ${activeTab === 'forms' ? 'active' : ''}`}
             onClick={() => handleTabChange('forms')}
           >
             <MessageSquare size={20} /> Form Submissions
           </button>
         </div>
-        
+
         <div className="sidebar-footer">
           <Link to="/" className="sidebar-link">
             <ExternalLink size={20} /> Main Website
@@ -292,19 +323,22 @@ export default function DashboardPage() {
         {/* Content Tabs */}
         <section className="dashboard-main-content">
           <div className="tabs-header">
-            <button 
+            <button
               className={`tab-btn ${activeTab === 'blogs' ? 'active' : ''}`}
               onClick={() => setActiveTab('blogs')}
             >
               <BookOpen size={18} /> Blogs ({blogs.length})
             </button>
-            <button 
+            <button
               className={`tab-btn ${activeTab === 'create' ? 'active' : ''}`}
-              onClick={() => setActiveTab('create')}
+              onClick={() => {
+                if (activeTab !== 'create') resetForm()
+                setActiveTab('create')
+              }}
             >
-              <PlusCircle size={18} /> Create Blog
+              <PlusCircle size={18} /> {editingBlogId ? 'Edit Blog' : 'Create Blog'}
             </button>
-            <button 
+            <button
               className={`tab-btn ${activeTab === 'forms' ? 'active' : ''}`}
               onClick={() => setActiveTab('forms')}
             >
@@ -344,15 +378,23 @@ export default function DashboardPage() {
                           <td>{post.author}</td>
                           <td>
                             <div className="action-btns">
-                              <button 
+                              <button
+                                className="icon-btn"
+                                onClick={() => startEdit(post)}
+                                title="Edit"
+                                style={{ color: '#3b82f6' }}
+                              >
+                                <Edit size={18} />
+                              </button>
+                              <button
                                 className={`icon-btn ${post.isArchived ? 'restore' : 'archive'}`}
                                 onClick={() => toggleArchive(post.id, post.isArchived)}
                                 title={post.isArchived ? 'Unarchive' : 'Archive'}
                               >
                                 {post.isArchived ? <ArchiveRestore size={18} /> : <Archive size={18} />}
                               </button>
-                              <button 
-                                className="icon-btn delete" 
+                              <button
+                                className="icon-btn delete"
                                 onClick={() => handleDelete(post.id)}
                                 title="Delete"
                               >
@@ -370,13 +412,13 @@ export default function DashboardPage() {
 
             {activeTab === 'create' && (
               <div className="create-tab fade-in">
-                <form className="create-form-wrapper" onSubmit={handlePublish}>
+                <form className="create-form-wrapper" onSubmit={handleSubmitBlog}>
                   <div className="form-grid">
                     <div className="form-group">
                       <label>Blog Title</label>
-                      <input 
-                        type="text" 
-                        placeholder="Enter post title..." 
+                      <input
+                        type="text"
+                        placeholder="Enter post title..."
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
@@ -399,9 +441,9 @@ export default function DashboardPage() {
 
                   <div className="form-group">
                     <label>Photo URL (Required)</label>
-                    <input 
-                      type="url" 
-                      placeholder="https://images.unsplash.com/photo-..." 
+                    <input
+                      type="url"
+                      placeholder="https://images.unsplash.com/photo-..."
                       value={photoUrlInput}
                       onChange={(e) => setPhotoUrlInput(e.target.value)}
                       required
@@ -413,9 +455,9 @@ export default function DashboardPage() {
 
                   <div className="form-group">
                     <label>Excerpt (Short summary)</label>
-                    <input 
-                      type="text" 
-                      placeholder="Short description..." 
+                    <input
+                      type="text"
+                      placeholder="Short description..."
                       value={excerpt}
                       onChange={(e) => setExcerpt(e.target.value)}
                       required
@@ -424,22 +466,36 @@ export default function DashboardPage() {
 
                   <div className="form-group">
                     <label>Content</label>
-                    <textarea 
-                      rows="10" 
+                    <textarea
+                      rows="10"
                       placeholder="Write your blog post content here..."
                       value={content}
                       onChange={(e) => setContent(e.target.value)}
                       required
                     ></textarea>
                   </div>
-                  
-                  <button 
-                    type="submit" 
-                    className="btn btn-primary submit-btn"
-                    disabled={isPublishing}
-                  >
-                    {isPublishing ? 'Publishing...' : 'Publish Post'}
-                  </button>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <button
+                      type="submit"
+                      className="btn btn-primary submit-btn"
+                      disabled={isPublishing}
+                    >
+                      {isPublishing ? (editingBlogId ? 'Updating...' : 'Publishing...') : (editingBlogId ? 'Update Post' : 'Publish Post')}
+                    </button>
+                    {editingBlogId && (
+                      <button
+                        type="button"
+                        className="btn nav-btn secondary"
+                        onClick={() => {
+                          resetForm()
+                          setActiveTab('blogs')
+                        }}
+                        style={{ padding: '0.75rem 1.5rem', borderRadius: '8px', cursor: 'pointer', background: '#334155', color: '#f8fafc', border: 'none' }}
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
                 </form>
               </div>
             )}
@@ -473,8 +529,8 @@ export default function DashboardPage() {
                             <td>{sub.submittedAt?.toDate ? sub.submittedAt.toDate().toLocaleDateString() : 'Just now'}</td>
                             <td>
                               <div className="action-btns">
-                                <button 
-                                  className="icon-btn delete" 
+                                <button
+                                  className="icon-btn delete"
                                   onClick={() => handleDeleteInquiry(sub.id)}
                                   title="Delete"
                                 >

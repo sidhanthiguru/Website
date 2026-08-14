@@ -78,7 +78,7 @@ export default function AboutPage() {
               },
               {
                 icon: '🏥',
-                title: 'Naturopathy & Yoga Hospital',
+                title: 'Sidhanthi Guru Yoga and Naturopathy Wellness Centre',
                 sub: 'Consultations by Appointment',
                 desc: 'The clinical branch — providing drug-free, non-invasive naturopathy treatments (hydrotherapy, mud therapy, diet therapy, and more), personalized detox programs, and expert health consultations online and offline.',
                 cta: '/services',
