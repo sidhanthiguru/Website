@@ -24,7 +24,7 @@ export const faqItems = [
     answer: "Yoga Therapy is a personalized, condition-specific program that uses asanas, pranayama, relaxation, and meditation to address particular health issues such as back pain, diabetes, PCOS, anxiety, hypertension, and more. Unlike general yoga classes, therapy sessions begin with a detailed health consultation and are fully customized to the individual's root cause and capacity.",
   },
   {
-    question: 'What services does the Naturopathy & Yoga Hospital offer?',
+    question: 'What services does the YOGA AND NATUROPATHY WELLNESS CENTRE offer?',
     answer: "Sidhanthi Guru Naturopathy and Yoga Hospital offers a full range of drug-free treatments including Hydrotherapy, Mud Therapy, Diet Therapy, Massage Therapy, Fasting Therapy, Sun Therapy (Heliotherapy), and Acupuncture & Acupressure. The hospital also offers personalized Detox Programs (short-term and long-term) and Consultation Services by prior appointment, both Online and Offline.",
   },
   {

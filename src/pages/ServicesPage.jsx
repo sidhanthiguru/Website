@@ -195,7 +195,7 @@ export default function ServicesPage() {
         <div className="container">
           <ScrollReveal>
             <div className="section-header text-center mx-auto">
-              <span className="section-subtitle">Sidhanthi Guru Naturopathy &amp; Yoga Hospital</span>
+              <span className="section-subtitle">SIDHANTHI GURU YOGA AND NATUROPATHY WELLNESS CENTRE</span>
               <h2>Holistic Healing Through Nature</h2>
               <p>
                 A dedicated center for natural healing — treating the root cause of diseases through safe, non-invasive, and drug-free therapies designed to support the body's own healing power.

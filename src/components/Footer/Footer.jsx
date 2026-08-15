@@ -31,7 +31,7 @@ export default function Footer() {
 
   return (
     <footer className="footer">
-      <motion.div 
+      <motion.div
         className="container footer__inner"
         initial="hidden"
         whileInView="visible"
@@ -40,16 +40,16 @@ export default function Footer() {
       >
         <motion.div className="footer__brand" variants={itemVariants}>
           <Link to="/" className="footer__logo-link">
-            <img 
-              src="/images/Sidhanthi_Guru_Logo__1_-removebg-preview.png" 
-              alt="Sidhanthi Guru Logo" 
-              className="footer__logo-image" 
+            <img
+              src="/images/Sidhanthi_Guru_Logo__1_-removebg-preview.png"
+              alt="Sidhanthi Guru Logo"
+              className="footer__logo-image"
             />
-            <span className="footer__logo-text">Sidhanthi Guru Yoga</span>
+            <span className="footer__logo-text">Sidhanthi Guru</span>
           </Link>
-          <p>Inspiring wellness since 2008. Join our<br/>community and discover your inner strength.</p>
+          <p>Inspiring wellness since 2008. Join our<br />community and discover your inner strength.</p>
           <div className="footer__location">
-             <p>📍Chidambaram, Tamil Nadu</p>
+            <p>📍Chidambaram, Tamil Nadu</p>
           </div>
         </motion.div>
 
@@ -93,7 +93,7 @@ export default function Footer() {
         </motion.div>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         className="footer__bottom container"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
