@@ -195,6 +195,32 @@
   padding: 12px 24px;
 }
 
+/* ── Wellness Centre Poster ─────────────────────── */
+.naturo-poster-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 28px 24px 12px;
+}
+
+.naturo-poster {
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .naturo-poster-wrap {
+    padding: 20px 16px 8px;
+  }
+
+  .naturo-poster {
+    max-width: 100%;
+  }
+}
+
 /* ── Carousel Section Label ──────────────────────── */
 .naturo-row {
   margin-bottom: 20px;

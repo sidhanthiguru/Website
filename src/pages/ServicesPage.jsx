@@ -250,6 +250,18 @@ export default function ServicesPage() {
             ))}
           </div>
         </div>
+
+        {/* Row 4: Wellness centre poster */}
+        <ScrollReveal>
+          <div className="naturo-poster-wrap">
+            <img
+              src="/images/poster.jpeg"
+              alt="Sidhanthi Guru Yoga and Naturopathy Wellness Centre"
+              className="naturo-poster"
+              loading="lazy"
+            />
+          </div>
+        </ScrollReveal>
       </section>
 
       <SectionDivider />
